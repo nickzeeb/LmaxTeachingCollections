@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CoalescingRingBuffer/CoalescingRingBuffer.iml" filepath="$PROJECT_DIR$/CoalescingRingBuffer/CoalescingRingBuffer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LMAXCollections.iml" filepath="$PROJECT_DIR$/LMAXCollections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LmaxTeachingCollections.iml" filepath="$PROJECT_DIR$/LmaxTeachingCollections.iml" />
     </modules>
   </component>
 </project>
