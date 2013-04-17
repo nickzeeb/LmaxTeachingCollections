@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+@SuppressWarnings("unchecked")
 public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
     private final int capacity;
     private final AtomicReference<LinkedHashMap<K,V>> atomicReference = new AtomicReference<LinkedHashMap<K, V>>();
@@ -37,7 +38,8 @@ public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
         boolean success = false;
 
         while (!success) {
-            LinkedHashMap<K, V> map = atomicReference.get();
+            LinkedHashMap<K, V> reference = atomicReference.get();
+            LinkedHashMap<K, V> map = (LinkedHashMap<K, V>) reference.clone();
 
             if (map.containsKey(key)) {
                 map.put(key, value);
@@ -49,7 +51,7 @@ public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
                 map.put(key, value);
             }
 
-            success = atomicReference.compareAndSet(map, map);
+            success = atomicReference.compareAndSet(reference, map);
         }
 
         return true;
