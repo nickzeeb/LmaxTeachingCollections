@@ -24,7 +24,6 @@ public final class CoalescingPowerOfTwoBuffer<K, V> implements CoalescingBuffer<
     private final AtomicReferenceArray<V> atomicReferenceArray;
 
     @SuppressWarnings("unchecked")
-    private final K nonCollapsibleKey = (K) new Object();
     private final int capacity;
     private final int mask;
 
@@ -43,22 +42,10 @@ public final class CoalescingPowerOfTwoBuffer<K, V> implements CoalescingBuffer<
         return ((int) value) & mask;
     }
 
-    @Override
     public int size() {
         return (int) (nextWrite - lastRead - 1);
     }
 
-    @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return nextRead == nextWrite;
-    }
-
-    @Override
     public boolean isFull() {
         return size() == capacity;
     }
@@ -96,11 +83,6 @@ public final class CoalescingPowerOfTwoBuffer<K, V> implements CoalescingBuffer<
 
         this.lastRead = nextWrite - 1;
         return (int) (nextWrite - lastRead - 1);
-    }
-
-    @Override
-    public boolean offer(V value) {
-        return add(nonCollapsibleKey, value);
     }
 
     private boolean add(K key, V value) {

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class MemoryLeakTest {
 
@@ -72,24 +71,20 @@ public class MemoryLeakTest {
         AtomicInteger counter = new AtomicInteger();
 
         CoalescingBuffer<CountingKey, CountingValue> buffer = CoalescingBufferFactory.create(16);
-        buffer.offer(new CountingValue(counter));
 
         buffer.offer(new CountingKey(1, counter), new CountingValue(counter));
         buffer.offer(new CountingKey(2, counter), new CountingValue(counter));
         buffer.offer(new CountingKey(1, counter), new CountingValue(counter));
 
-        buffer.offer(new CountingValue(counter));
-
-        assertEquals(4, buffer.size());
         buffer.poll(new ArrayList<CountingValue>());
-        assertTrue(buffer.isEmpty());
 
-        buffer.offer(null); // to trigger the clean
+        buffer.offer(new CountingKey(0, counter), null); // to trigger the clean
+
         for (int i = 0; i < 10; i++) {
             System.gc();
             Thread.sleep(100);
         }
 
-        assertEquals(8, counter.get());
+        assertEquals(6, counter.get());
     }
 }

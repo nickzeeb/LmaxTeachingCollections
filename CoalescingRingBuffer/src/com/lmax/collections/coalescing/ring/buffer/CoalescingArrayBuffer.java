@@ -24,7 +24,6 @@ public final class CoalescingArrayBuffer<K, V> implements CoalescingBuffer<K, V>
     private final AtomicReferenceArray<V> atomicReferenceArray;
 
     @SuppressWarnings("unchecked")
-    private final K nonCollapsibleKey = (K) new Object();
     private final int capacity;
 
     private volatile long firstWrite = 1; // the oldest slot that is is safe to write to
@@ -37,22 +36,10 @@ public final class CoalescingArrayBuffer<K, V> implements CoalescingBuffer<K, V>
         this.atomicReferenceArray = new AtomicReferenceArray<V>(this.capacity);
     }
 
-    @Override
     public int size() {
         return (int) (nextWrite - lastRead - 1);
     }
 
-    @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstWrite == nextWrite;
-    }
-
-    @Override
     public boolean isFull() {
         return size() == capacity;
     }
@@ -94,11 +81,6 @@ public final class CoalescingArrayBuffer<K, V> implements CoalescingBuffer<K, V>
 
     private int computeIndex(long value) {
         return ((int) value) % capacity;
-    }
-
-    @Override
-    public boolean offer(V value) {
-        return add(nonCollapsibleKey, value);
     }
 
     private boolean add(K key, V value) {

@@ -46,22 +46,10 @@ public final class CoalescingSingleWriterBuffer<K, V> implements CoalescingBuffe
         return 1 << (32 - Integer.numberOfLeadingZeros(value - 1));
     }
 
-    @Override
     public int size() {
         return (int) (nextWrite - lastRead - 1);
     }
 
-    @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstWrite == nextWrite;
-    }
-
-    @Override
     public boolean isFull() {
         return size() == capacity;
     }
@@ -85,11 +73,6 @@ public final class CoalescingSingleWriterBuffer<K, V> implements CoalescingBuffe
         }
 
         return add(key, value);
-    }
-
-    @Override
-    public boolean offer(V value) {
-        return add(nonCollapsibleKey, value);
     }
 
     private boolean add(K key, V value) {
@@ -149,9 +132,5 @@ public final class CoalescingSingleWriterBuffer<K, V> implements CoalescingBuffe
 }
 
 /**
-
- [exec] time 21.9s
- [exec] compression ratio = 47.9
- [exec] mops = 45.8
 
 */

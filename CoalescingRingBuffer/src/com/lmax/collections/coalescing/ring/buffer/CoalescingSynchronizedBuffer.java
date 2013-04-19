@@ -11,26 +11,6 @@ public class CoalescingSynchronizedBuffer<K, V> implements CoalescingBuffer<K, V
         this.linkedHashMap = new LinkedHashMap<K, V>(capacity);
     }
 
-    @Override
-    public synchronized int size() {
-        return linkedHashMap.size();
-    }
-
-    @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    @Override
-    public synchronized boolean isEmpty() {
-        return size() == 0;
-    }
-
-    @Override
-    public synchronized boolean isFull() {
-        return size() == capacity;
-    }
-
     @Override public synchronized boolean offer(K key, V value) {
         if (linkedHashMap.containsKey(key)) {
             linkedHashMap.put(key, value);
@@ -56,17 +36,9 @@ public class CoalescingSynchronizedBuffer<K, V> implements CoalescingBuffer<K, V
         return size;
     }
 
-    @Override
-    public synchronized boolean offer(V value) {
-        return offer((K) new Object(), value);
-    }
-
 }
 
 /**
 
- [exec] time 55.0s
- [exec] compression ratio = 2680.7
- [exec] mops = 0.9
 
 */

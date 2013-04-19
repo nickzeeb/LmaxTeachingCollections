@@ -26,8 +26,6 @@ public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> 
     private final K[] keys;
     private final AtomicReferenceArray<V> atomicReferenceArray;
 
-    @SuppressWarnings("unchecked")
-    private final K nonCollapsibleKey = (K) new Object();
     private final int mask;
     private final int capacity;
 
@@ -48,34 +46,10 @@ public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> 
         return 1 << (32 - Integer.numberOfLeadingZeros(value - 1));
     }
 
-    @Override
     public int size() {
         return (int) (nextWrite - lastRead.get() - 1);
     }
 
-    @Override
-    public int capacity() {
-        return capacity;
-    }
-
-    public long rejectionCount() {
-        return rejectionCount.get();
-    }
-
-    public long nextWrite() {
-        return nextWrite;
-    }
-
-    public long nextRead() {
-        return firstWrite;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstWrite == nextWrite;
-    }
-
-    @Override
     public boolean isFull() {
         return size() == capacity;
     }
@@ -99,11 +73,6 @@ public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> 
         }
 
         return add(key, value);
-    }
-
-    @Override
-    public boolean offer(V value) {
-        return add(nonCollapsibleKey, value);
     }
 
     private boolean add(K key, V value) {

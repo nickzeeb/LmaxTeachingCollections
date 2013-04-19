@@ -98,9 +98,6 @@ public class Example {
     public static void main(String[] args) throws Exception {
         CoalescingRingBuffer<String, StockPrice> buffer = new CoalescingRingBuffer<String, StockPrice>(8);
 
-        // register an mbean to be able to view the state of the coalescing ring buffer
-        CoalescingRingBufferViewer.register("Example", buffer, ManagementFactory.getPlatformMBeanServer());
-
         Example example = new Example(buffer);
         example.run();
     }
