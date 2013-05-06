@@ -68,22 +68,32 @@ public class PerformanceTest {
 		System.out.println(String.format("compression ratio = %.1f", compressionRatio));
 
 		double megaOpsPerSecond = (1000.0 * numberOfUpdates) / nanosTaken;
-		System.out.println(String.format("mops = %.1f", megaOpsPerSecond));
+		System.out.println(String.format("mops = %.2f", megaOpsPerSecond));
 
         return Math.round(megaOpsPerSecond);
 	}
 
 	public static void main(String[] args) throws Exception {
-        long[] results = new long[3];
+        long[] results = createResults(3);
         int runNumber = 1;
 
         do {
-            long result = run(runNumber++, 1000 * MILLION);
+            long result = run(runNumber++, 5 * MILLION);
             update(results, result);
             Thread.sleep(5 * SECONDS);
 
         } while (!areAllResultsTheSame(results));
 	}
+
+    private static long[] createResults(int size) {
+        long[] results = new long[size];
+
+        for (int i = 0; i < results.length; i++) {
+            results[i] = -1;
+        }
+
+        return results;
+    }
 
     private static long run(int runNumber, long numberOfUpdates) throws InterruptedException {
         CoalescingBuffer<Long, MarketSnapshot> buffer = CoalescingBufferFactory.create(1 << 20);
