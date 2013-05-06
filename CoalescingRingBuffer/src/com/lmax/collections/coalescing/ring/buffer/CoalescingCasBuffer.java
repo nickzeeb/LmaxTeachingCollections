@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("unchecked")
+// Performance =  0.23 kOPS
 public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
     private final int capacity;
     private final AtomicReference<LinkedHashMap<K,V>> atomicReference = new AtomicReference<LinkedHashMap<K, V>>();
@@ -48,9 +49,3 @@ public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
     }
 
 }
-
-/**
-
- 0.23 kOPS
-
- */
