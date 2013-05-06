@@ -51,5 +51,6 @@ public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
 
 /**
 
+ 0.23 kOPS
 
  */
