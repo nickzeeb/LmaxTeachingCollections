@@ -103,8 +103,8 @@ public final class CoalescingSingleWriterBuffer<K, V> implements CoalescingBuffe
 
         for (long readIndex = lastRead + 1; readIndex < nextWrite; readIndex++) {
             int index = computeIndex(readIndex);
-//            keys[index] = null;
-//            bucket.add(atomicReferenceArray.getAndSet(index, null));
+            // keys[index] = null;
+            // bucket.add(atomicReferenceArray.getAndSet(index, null));
             bucket.add(atomicReferenceArray.get(index));
         }
 
