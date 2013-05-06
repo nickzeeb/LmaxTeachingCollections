@@ -40,5 +40,6 @@ public class CoalescingSynchronizedBuffer<K, V> implements CoalescingBuffer<K, V
 
 /**
 
+ 0.02 MOPS
 
 */
