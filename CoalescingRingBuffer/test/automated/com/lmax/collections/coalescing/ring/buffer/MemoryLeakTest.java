@@ -50,6 +50,7 @@ public class MemoryLeakTest {
         @Override
         protected void finalize() throws Throwable {
             counter.incrementAndGet();
+            super.finalize();
         }
     }
 
@@ -63,6 +64,7 @@ public class MemoryLeakTest {
         @Override
         protected void finalize() throws Throwable {
             counter.incrementAndGet();
+            super.finalize();
         }
     }
 
