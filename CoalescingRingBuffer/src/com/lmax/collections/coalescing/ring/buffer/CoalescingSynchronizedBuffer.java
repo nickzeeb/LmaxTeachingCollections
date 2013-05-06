@@ -2,7 +2,7 @@ package com.lmax.collections.coalescing.ring.buffer;
 
 import java.util.*;
 
-// Performance = 20 kOPS
+// Performance = 25 kOPS
 public class CoalescingSynchronizedBuffer<K, V> implements CoalescingBuffer<K, V> {
     private final int capacity;
     private final LinkedHashMap<K, V> linkedHashMap;
