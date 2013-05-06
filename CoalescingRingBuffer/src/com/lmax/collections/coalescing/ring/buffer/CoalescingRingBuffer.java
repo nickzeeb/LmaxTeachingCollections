@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
+// Performance = 48 MOPS
 public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> {
 
     private volatile long nextWrite = 1; // the next write index
