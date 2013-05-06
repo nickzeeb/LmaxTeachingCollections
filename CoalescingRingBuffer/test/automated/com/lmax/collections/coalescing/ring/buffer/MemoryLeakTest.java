@@ -32,7 +32,6 @@ public class MemoryLeakTest {
             this.counter = counter;
         }
 
-
         @Override
         public boolean equals(Object object) {
             if (this == object) return true;
