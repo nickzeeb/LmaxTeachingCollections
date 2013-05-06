@@ -17,6 +17,7 @@ package com.lmax.collections.coalescing.ring.buffer;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
+// Performance = 34 MOPS
 public final class CoalescingPowerOfTwoBuffer<K, V> implements CoalescingBuffer<K, V> {
 
     private volatile long nextWrite = 1; // the next write index
