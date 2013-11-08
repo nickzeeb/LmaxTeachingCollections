@@ -107,6 +107,7 @@ public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> 
             bucket.add(atomicReferenceArray.get(index));
         }
 
+        // this.lastRead = nextWrite - 1;
         this.lastRead.lazySet(nextWrite - 1);
         return (int) (nextWrite - lastRead - 1);
     }
@@ -121,6 +122,7 @@ public final class CoalescingRingBuffer<K, V> implements CoalescingBuffer<K, V> 
         while (lastCleaned < lastRead) {
             int index = mask(++lastCleaned);
             keys[index] = null;
+            // atomicReferenceArray.set(index, null);
             atomicReferenceArray.lazySet(index, null);
         }
     }

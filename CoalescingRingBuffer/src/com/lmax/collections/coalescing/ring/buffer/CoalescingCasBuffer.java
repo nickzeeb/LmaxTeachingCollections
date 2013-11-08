@@ -19,20 +19,20 @@ public class CoalescingCasBuffer<K,V> implements CoalescingBuffer<K,V> {
         boolean success = false;
 
         while (!success) {
-            LinkedHashMap<K, V> reference = atomicReference.get();
-            LinkedHashMap<K, V> map = (LinkedHashMap<K, V>) reference.clone();
+            LinkedHashMap<K, V> current = atomicReference.get();
+            LinkedHashMap<K, V> modified = (LinkedHashMap<K, V>) current.clone();
 
-            if (map.containsKey(key)) {
-                map.put(key, value);
+            if (modified.containsKey(key)) {
+                modified.put(key, value);
             }
-            else if (map.size() == capacity) {
+            else if (modified.size() == capacity) {
                 return false;
             }
             else {
-                map.put(key, value);
+                modified.put(key, value);
             }
 
-            success = atomicReference.compareAndSet(reference, map);
+            success = atomicReference.compareAndSet(current, modified);
         }
 
         return true;
